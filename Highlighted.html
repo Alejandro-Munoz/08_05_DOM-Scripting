@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dom Scripting 1</title>
+    <style>
+        span{
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded',function(){
+            var input = document.getElementById('search');
+            var text = document.getElementById('content').textContent;
+            input.addEventListener('keypress',function(event){
+                //console.log(event);
+                var re, newString;
+                if(event.keyCode !== 8){
+                    re = this.value + String.fromCharCode( event.charCode );
+                    console.log(re);
+                }else{
+                    re = this.value.slice(0,-1);
+                    console.log(re);
+
+                }
+
+                newString = text.replace(new RegExp(re,'g'),'<span>' + re + '</span>');
+                document.getElementById('content').innerHTML = newString;
+            });
+        });
+    </script>
+
+</head>
+<body>
+<input type="text" id="search"/>
+<div id="content">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id libero eu nisl laoreet semper in ac odio. Curabitur blandit vehicula dolor, non aliquam mauris ultricies eu. Vivamus pellentesque eros augue, eu accumsan orci pharetra nec. Aenean in vehicula tortor. Nullam facilisis lorem ac augue ultricies, at egestas est molestie. Aenean congue dapibus orci eu cursus. Quisque in leo egestas, convallis urna quis, luctus risus. Ut commodo dolor magna, eget imperdiet tortor facilisis a. Vivamus leo magna, viverra nec ultrices a, ultricies ac massa. Pellentesque molestie pharetra elit, sit amet cursus leo dapibus sit amet. In placerat quam ac volutpat venenatis. Vestibulum ut leo porta, volutpat metus vitae, cursus neque. Donec vestibulum mattis lectus eu sagittis. Donec pretium ex molestie, auctor lectus malesuada, placerat nibh.
+
+    Suspendisse a lectus facilisis, dictum felis at, fermentum lacus. Vivamus volutpat magna sit amet lacinia mollis. Vivamus viverra, sapien a tincidunt lobortis, dolor lorem lobortis augue, a efficitur nunc mi quis quam. Praesent vitae mauris sed lorem mattis rhoncus ut at nulla. Sed at nibh euismod, efficitur neque sed, suscipit ipsum. Pellentesque metus lectus, congue vehicula eros sed, blandit fermentum ligula. Sed at nisl nec tortor consectetur luctus.
+
+    Sed non turpis nec purus euismod elementum. Quisque rutrum, sapien a iaculis venenatis, nisl magna egestas nisl, vel pharetra eros nibh et ante. Suspendisse sed sapien massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam id augue in risus molestie hendrerit. Nunc turpis nisi, tempus sit amet purus eu, scelerisque pellentesque urna. Maecenas congue est mi. Integer lobortis malesuada purus eget sollicitudin. Morbi varius felis elit, non pharetra nulla euismod non. Ut semper mollis dolor et ornare. Mauris porta mi et consequat eleifend. Sed ut mi auctor, dictum quam quis, aliquam tortor.
+
+</div>
+</body>
+</html>

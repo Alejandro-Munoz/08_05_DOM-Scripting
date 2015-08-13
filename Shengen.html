@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Schengen</title>
+    <script>
+        var content = document.querySelector('div.content');
+
+        /*
+         ul[0]-->schenlist
+         ul[1]-->eulist
+         ul[2]-->candidatelist
+         ul[3]-->potentiallist
+         */
+        var ul = content.getElementsByTagName('ul');
+        var SchengenList = [], EUList=[], CandidateList=[],
+                PotentialList=[], MemberYear=[];
+
+        //console.log(ul[0].children);
+        getCountries(ul[0].children,SchengenList);
+        //console.log(SchengenList);
+        getCountries(ul[1].children,EUList);
+        //console.log(MemberList);
+        EUList.forEach(function(elem){
+            var year = elem.slice(-5,-1);
+            var member = elem.slice(0,-6);
+            MemberYear[member]=year;
+        });
+        //console.log(MemberYear);
+
+        getCountries(ul[2].children,CandidateList);
+        getCountries(ul[3].children,PotentialList);
+
+
+        function getCountries(inputArray,outputArray){
+            if(!Array.isArray(inputArray)){
+                inputArray = Array.prototype.slice.call(inputArray);
+            }
+            inputArray.forEach(function(elem){
+                outputArray.push(elem.textContent);
+            });
+        }
+
+
+        var schengen ={
+            countries:SchengenList,
+            EUCountries:EUList,
+            CandidateCountries:CandidateList,
+            PotentialCountries:CandidateList,
+            CountryMemberYear:MemberYear,
+            getCountries:function(start,till){
+                var out =[];
+                var countries = this.CountryMemberYear;
+                for(var c in countries){
+                    //console.log(c);
+                    if(countries[c] >= start && countries[c] <= till){
+                        out.push(c);
+                    }
+                }
+                return out;
+            }
+        }
+
+        var a = schengen;
+
+        console.log(a.getCountries(1960,2000));
+
+    </script>
+
+</head>
+<body>
+    <div>http://www.schengenvisainfo.com/schengen-visa-countries-list/</div>
+</body>
+</html>

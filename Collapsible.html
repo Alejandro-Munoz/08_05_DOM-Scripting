@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Collapsible</title>
+    <style>
+        span{
+            cursor:pointer;
+        }
+        .show{
+            display:block;
+        }
+        .hide{
+            display: none;
+        }
+        .toggle{
+            float: inherit;
+        }
+    </style>
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded',function(){
+            //take body and create tree
+            var root = document.body;
+            createTree(root);
+            //create listener on each span [+]
+            var spanList = document.getElementsByClassName('toggle');
+            Array.prototype.forEach.call(spanList, function (elem) {
+                var toggle = true;
+                elem.addEventListener('click',function(e){
+
+                    if (toggle){
+                        if(this.nextElementSibling){
+                            this.nextElementSibling.classList.remove('show');
+                            this.nextElementSibling.classList.add('hide');
+                            this.innerHTML = '[+]';
+                            toggle = false;
+                        }
+                    }
+                    else{
+                        if(this.nextElementSibling){
+                            this.nextElementSibling.classList.add('show');
+                            this.nextElementSibling.classList.remove('hide');
+                            this.innerHTML = '[-]';
+                            toggle = true;
+                        }
+                    }
+                });
+            });
+            //Create a tree given an element
+            function createTree(element){
+                console.log(element);
+                //console.log(element.hasChildNodes());
+                if(element.childElementCount>0){
+                    var children = element.children;
+                    console.log('parent'+element+'children'+children);
+                    Array.prototype.forEach.call(children, function(child){
+                        if(child.nodeType === 1){
+                            console.log(child);
+                            var x = document.createElement(child.tagName);
+                            var span = document.createElement('span');
+                            span.innerHTML = '[-]'
+                            span.classList.add('toggle');
+                            x.innerHTML = child.nodeName.toLowerCase();
+                            root.appendChild(x);
+                            root.insertBefore(span,x);
+
+                            if (child.hasChildNodes()){
+                                createTree(child);
+                                if (child.nextElementSibling){
+                                    createTree(child.nextElementSibling);
+                                }
+                            }
+
+                        }
+
+                    });
+                }
+            }
+        });
+
+
+    </script>
+</head>
+<body>body
+    <div id="div1" class="hide">div1
+        <div>div2
+            <span>INFO</span>
+        </div>
+    </div>
+
+</body>
+</html>
